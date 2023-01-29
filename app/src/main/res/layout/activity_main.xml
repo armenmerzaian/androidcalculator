@@ -144,12 +144,13 @@
                 android:id="@+id/buttonMultiply"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/buttonHorizontalMargin"
                 android:layout_weight="1"
-                android:textSize="@dimen/buttonTextSize"
                 android:backgroundTint="@color/orange"
-                android:textColor="@color/white"
                 android:text="@string/textMultiply"
-                android:layout_marginHorizontal="@dimen/buttonHorizontalMargin"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/buttonTextSize" />
 
         </LinearLayout>
 
@@ -267,12 +268,12 @@
                 android:id="@+id/buttonZero"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="2.1"
                 android:textSize="@dimen/buttonTextSize"
                 android:backgroundTint="@color/material_dynamic_neutral50"
                 android:textColor="@color/white"
                 android:text="@string/textZero"
-                android:layout_marginHorizontal="@dimen/buttonHorizontalMargin"/>
+                android:layout_marginHorizontal="@dimen/buttonHorizontalMargin" />
 
             <Button
                 android:id="@+id/buttonDecimal"

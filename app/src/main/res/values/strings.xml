@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">SimpleCalculator</string>
-    <string name="textClear">AC</string>
+    <string name="app_name">Simple Calculator</string>
+    <string name="textClear">C</string>
     <string name="textPlusMinus">+/-</string>
     <string name="textDivide">÷</string>
     <string name="textPercent">%</string>
     <string name="textSeven">7</string>
     <string name="textEight">8</string>
     <string name="textNine">9</string>
-    <string name="textMultiply">X</string>
+    <string name="textMultiply">x</string>
     <string name="textFour">4</string>
     <string name="textFive">5</string>
     <string name="textSix">6</string>
