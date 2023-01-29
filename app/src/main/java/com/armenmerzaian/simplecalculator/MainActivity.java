@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity{
         widgetListOps.forEach(widget -> widget.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(CalculatorBrain.getLastInput().matches("[^%÷x\\-+.]")) { //anything that's not %÷x-+
+                if(CalculatorBrain.getLastInput().matches(".*[^%÷x\\-+]$")) { //anything that's not %÷x-+
                     CalculatorBrain.pushValue(((TextView)v).getText().toString());
                     refreshInput();
                 }
@@ -118,10 +118,6 @@ public class MainActivity extends AppCompatActivity{
         btn_PlusMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if(CalculatorBrain.getLastInput().matches("^-?\\d+$")){ // matches any pos or neg integer
-                    CalculatorBrain.flipSign();
-                    refreshInput();
-                }*/
                 if(!CalculatorBrain.getInputValues().isEmpty()){
                     CalculatorBrain.flipSign();
                     refreshInput();
