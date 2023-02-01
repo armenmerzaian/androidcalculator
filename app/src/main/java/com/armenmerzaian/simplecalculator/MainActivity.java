@@ -1,10 +1,8 @@
 package com.armenmerzaian.simplecalculator;
 
-import androidx.annotation.StringDef;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -55,38 +53,38 @@ public class MainActivity extends AppCompatActivity{
     public void initCalculator(){
         //init calculator brain
         //initialize the widgets
-        tv_Input = (TextView) findViewById(R.id.calcInput);
-        tv_Result = (TextView) findViewById(R.id.calcResult);
+        tv_Input = findViewById(R.id.calcInput);
+        tv_Result = findViewById(R.id.calcResult);
         resetTextViews();
 
-        btn_Clear = (Button) findViewById(R.id.buttonClear);
-        btn_PlusMinus = (Button) findViewById(R.id.buttonPlusMinus);
-        btn_Percent = (Button) findViewById(R.id.buttonPercent);
-        btn_Divide = (Button) findViewById(R.id.buttonDivide);
+        btn_Clear = findViewById(R.id.buttonClear);
+        btn_PlusMinus = findViewById(R.id.buttonPlusMinus);
+        btn_Percent = findViewById(R.id.buttonPercent);
+        btn_Divide = findViewById(R.id.buttonDivide);
 
-        btn_Seven = (Button) findViewById(R.id.buttonSeven);
-        btn_Eight = (Button) findViewById(R.id.buttonEight);
-        btn_Nine = (Button) findViewById(R.id.buttonNine);
-        btn_Multiply = (Button) findViewById(R.id.buttonMultiply);
+        btn_Seven = findViewById(R.id.buttonSeven);
+        btn_Eight = findViewById(R.id.buttonEight);
+        btn_Nine = findViewById(R.id.buttonNine);
+        btn_Multiply = findViewById(R.id.buttonMultiply);
 
-        btn_Four = (Button) findViewById(R.id.buttonFour);
-        btn_Five = (Button) findViewById(R.id.buttonFive);
-        btn_Six = (Button) findViewById(R.id.buttonSix);
-        btn_Minus = (Button) findViewById(R.id.buttonMinus);
+        btn_Four = findViewById(R.id.buttonFour);
+        btn_Five = findViewById(R.id.buttonFive);
+        btn_Six = findViewById(R.id.buttonSix);
+        btn_Minus = findViewById(R.id.buttonMinus);
 
 
-        btn_One = (Button) findViewById(R.id.buttonOne);
-        btn_Two = (Button) findViewById(R.id.buttonTwo);
-        btn_Three = (Button) findViewById(R.id.buttonThree);
-        btn_Plus = (Button) findViewById(R.id.buttonPlus);
+        btn_One = findViewById(R.id.buttonOne);
+        btn_Two = findViewById(R.id.buttonTwo);
+        btn_Three = findViewById(R.id.buttonThree);
+        btn_Plus = findViewById(R.id.buttonPlus);
 
-        btn_Zero = (Button) findViewById(R.id.buttonZero);
-        btn_Decimal = (Button) findViewById(R.id.buttonDecimal);
-        btn_Equals = (Button) findViewById(R.id.buttonEquals);
+        btn_Zero = findViewById(R.id.buttonZero);
+        btn_Decimal = findViewById(R.id.buttonDecimal);
+        btn_Equals = findViewById(R.id.buttonEquals);
 
         //add the button widgets to an array for better developer experience
-        Collection<View> widgetListNums = new ArrayList<View>();
-        Collection<View> widgetListOps = new ArrayList<View>();
+        Collection<View> widgetListNums = new ArrayList<>();
+        Collection<View> widgetListOps = new ArrayList<>();
         Collections.addAll(widgetListNums,
                 btn_Seven, btn_Eight, btn_Nine,
                 btn_Four, btn_Five, btn_Six,
@@ -96,60 +94,43 @@ public class MainActivity extends AppCompatActivity{
                 btn_Percent, btn_Divide, btn_Multiply, btn_Minus, btn_Plus, btn_Decimal);
 
         //add onClick listeners to each NUMBER widget
-        widgetListNums.forEach(widget -> widget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        widgetListNums.forEach(widget -> widget.setOnClickListener(v -> {
+            CalculatorBrain.pushValue(((TextView)v).getText().toString());
+            refreshInput();
+        }));
+
+        // add onClick listeners to each OPERATION widget
+        widgetListOps.forEach(widget -> widget.setOnClickListener(v -> {
+            if(CalculatorBrain.getLastInput().matches(".*[^%÷x\\-+]$")) { //anything that's not %÷x-+
                 CalculatorBrain.pushValue(((TextView)v).getText().toString());
                 refreshInput();
             }
         }));
 
-        // add onClick listeners to each OPERATION widget
-        widgetListOps.forEach(widget -> widget.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(CalculatorBrain.getLastInput().matches(".*[^%÷x\\-+]$")) { //anything that's not %÷x-+
-                    CalculatorBrain.pushValue(((TextView)v).getText().toString());
-                    refreshInput();
-                }
+        btn_PlusMinus.setOnClickListener(v -> {
+            if(CalculatorBrain.getInputValues().isEmpty() || CalculatorBrain.getLastInput().matches("^[+\\-x÷%]$")){
+                return;
             }
-        }));
+            CalculatorBrain.flipSign();
+            refreshInput();
+        });
 
-        btn_PlusMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!CalculatorBrain.getInputValues().isEmpty()){
-                    CalculatorBrain.flipSign();
-                    refreshInput();
-                }
+        btn_Clear.setOnLongClickListener(v -> {
+            resetTextViews();
+            return true;
+        });
+
+        btn_Clear.setOnClickListener(v -> {
+            if(!CalculatorBrain.getInputValues().isEmpty()) {
+                CalculatorBrain.popBack();
+                refreshInput();
             }
         });
 
-        btn_Clear.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                resetTextViews();
-                return true;
-            }
-        });
-
-        btn_Clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!CalculatorBrain.getInputValues().isEmpty()) {
-                    CalculatorBrain.popBack();
-                    refreshInput();
-                }
-            }
-        });
-
-        btn_Equals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(CalculatorBrain.getLastInput().matches("[^%÷x\\-+.]")) { //anything that's not %÷x-+
-                    CalculatorBrain.calculate();
-                    refreshOutput();
-                }
+        btn_Equals.setOnClickListener(v -> {
+            if(!CalculatorBrain.getLastInput().matches("[%÷x\\-+.]$")) { //anything that's not %÷x-+
+                CalculatorBrain.calculate();
+                refreshOutput();
             }
         });
     }
@@ -165,7 +146,7 @@ public class MainActivity extends AppCompatActivity{
     private void resetTextViews(){
         CalculatorBrain.resetAll();
         tv_Input.setText("");
-        tv_Result.setText(CalculatorBrain.getOutputValue().toString());
+        tv_Result.setText(CalculatorBrain.getOutputValue());
     }
 
 
