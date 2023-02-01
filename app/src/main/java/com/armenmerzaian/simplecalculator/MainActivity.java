@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity{
 
         // add onClick listeners to each OPERATION widget
         widgetListOps.forEach(widget -> widget.setOnClickListener(v -> {
-            if(CalculatorBrain.getLastInput().matches(".*[^%÷x\\-+]$")) { //anything that's not %÷x-+
+            if(CalculatorBrain.getLastInput().matches("[^%÷x\\-+.]$")) { //anything that's not %÷x-+
                 CalculatorBrain.pushValue(((TextView)v).getText().toString());
                 refreshInput();
             }

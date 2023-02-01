@@ -152,7 +152,7 @@ public class CalculatorBrain {
                 return a * b;
             case "%":
                 if (b == 0) {
-                    throw new IllegalArgumentException("Error! Percent Zero");
+                    throw new IllegalArgumentException("Error! Mod Zero");
                 }
                 return a % b;
             case "÷":
