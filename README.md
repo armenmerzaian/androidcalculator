@@ -18,4 +18,12 @@ Features:
 - Error prevention
 - Rounding to two significant figures
 
+## Download
+Try it out on your own device or on an emulator: [Download from GitHub](https://github.com/armenmerzaian/androidcalculator/raw/master/SimpleCalculator.apk)
+
+1. Make sure you allow thrid-party app installs from your mobile browser
+2. Once the file is downloaded, click the triple dots on the file to expand the menu
+3. Install
+
 ## Preview
+![gif](https://github.com/armenmerzaian/androidcalculator/blob/master/ezgif.com-gif-maker.gif?raw=true)
