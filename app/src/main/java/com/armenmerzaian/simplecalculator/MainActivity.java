@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         btn_Equals.setOnClickListener(v -> {
-            if(!CalculatorBrain.getLastInput().matches("[%÷x\\-+.]$")) { //anything that's not %÷x-+
+            if(!CalculatorBrain.getLastInput().matches("[%÷x\\-+.]$") || CalculatorBrain.getInputValues().isEmpty()) { //anything that's not %÷x-+
                 CalculatorBrain.calculate();
                 refreshOutput();
             }

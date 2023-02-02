@@ -82,7 +82,7 @@ public class CalculatorBrain {
         ArrayList<String> numbers = new ArrayList<>();
         ArrayList<String> operators = new ArrayList<>();
 
-        Log.d("CalculatorBrain", "m_input: " + m_inputValues);
+        //Log.d("CalculatorBrain", "m_input: " + m_inputValues);
 
         for(int i = 0, index = 0; i < m_inputValues.size(); i++){
             String current = m_inputValues.get(i);
@@ -99,9 +99,6 @@ public class CalculatorBrain {
                 }
             }
         }
-
-        Log.d("CalculatorBrain", "numbers: " + numbers);
-        Log.d("CalculatorBrain", "operators: " + operators);
 
         try {
             setOutputValue(calculate(numbers, operators));
@@ -129,14 +126,14 @@ public class CalculatorBrain {
             numStack.push(applyOp(opStack.pop(), numStack.pop(), numStack.pop()));
         }
 
-        return numStack.pop();
+        return Math.round(numStack.pop() * 100.0) / 100.0;
     }
 
     private static boolean hasPrecedence(String op1, String op2) {
         if (op2.equals("x") || op2.equals("÷") || op2.equals("%")) {
             return true;
         }
-        if (op1.equals("x") || op1.equals("÷")) {
+        if (op1.equals("x") || op1.equals("÷") || op1.equals("%")) {
             return false;
         }
         return true;
